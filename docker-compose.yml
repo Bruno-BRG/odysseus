@@ -190,9 +190,11 @@ services:
   opencode-proxy:
     # Injeta o header x-opencode-session exigido pelo OpenCode Go.
     # Fica apenas na rede interna do compose (nenhuma porta publicada).
+    # Monta o diretorio (nao o arquivo): bind de arquivo inexistente vira
+    # diretorio no host e quebra o docker cp do deploy.
     image: nginx:1.27-alpine
     volumes:
-      - ./config/opencode-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./config/opencode-proxy:/etc/nginx/conf.d:ro
     restart: unless-stopped
 
 volumes:
